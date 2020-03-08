@@ -87,7 +87,8 @@
       },
       loadMore() {
         this.getGoodsList(this.currentType);
-        this.$refs.scroll.finishPullUp()
+
+        this.$refs.scroll.scroll.refresh()
       },
       
       /* 网络请求相关方法 */
@@ -102,6 +103,7 @@
         getGoodsList(type,page).then(res => {
           this.goods[type].list.push(...res.data.list);
           this.goods[type].page += 1;
+          this.$refs.scroll.finishPullUp()
         })
       }
     }
