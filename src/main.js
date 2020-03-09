@@ -11,3 +11,5 @@ new Vue({
   store,
   render: h => h(App)
 })
+
+Vue.prototype.$bus = new Vue( );
