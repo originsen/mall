@@ -53,7 +53,8 @@
         currentType: 'pop',
         isShow: false,
         tabOffsetTop: 0,
-        isFixedTab: false
+        isFixedTab: false,
+        aliveHeight: 0
       }
     },
     components: {
@@ -85,6 +86,16 @@
         }
       )
 
+    },
+    activated() {
+      this.$refs.scroll.refresh()
+      this.$refs.scroll.scrollTo(0,this.aliveHeight,0)
+    },
+    deactivated() {
+      this.aliveHeight = this.$refs.scroll.scroll.startY
+    },
+    destroyed() {
+      console.log('destroyed');
     },
     methods: {
       /* 事件监听相关的方法 */
