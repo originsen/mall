@@ -8,6 +8,12 @@ export function getDetailSwiper(iid) {
   })
 }
 
+export function getRecommend() {
+    return request({
+      url: '/recommend'
+    })
+}
+
 export class GoodsInfo {
   constructor(itemInfo,columns,services) {
     this.title = itemInfo.title;
@@ -29,5 +35,20 @@ export class ShopInfo {
     this.score = shopInfo.score;
 
 
+  }
+}
+
+export class DetailInfo {
+  constructor(detailInfo) {
+    this.desc = detailInfo.desc;
+    this.detailImage = detailInfo.detailImage;
+  }
+}
+
+export class DetailItemParams {
+  constructor(info,rule) {
+    // this.image = info.images ? info.images[0] : '';
+    this.set = info.set;
+    this.tables = rule.tables;
   }
 }

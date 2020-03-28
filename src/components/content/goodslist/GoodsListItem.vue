@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item" @click="detailClick" >
-    <img :src="goodsItem.show.img" alt="" @load="imageLoad">
+    <img :src="showImage" alt="" @load="imageLoad">
     <div class="goods-item-info">
       <p class="goods-item-title">{{goodsItem.title}}</p>
       <span class="goods-item-price">{{goodsItem.price}}</span>
@@ -17,6 +17,14 @@
         type: Object,
         default: {}
       }
+    },
+    computed: {
+      showImage() {
+        return this.goodsItem.image || this.goodsItem.show.img
+      },
+      // itemId() {
+      //   return this.goodsItem.iid || this.goodsItem.item_id
+      // }
     },
     methods: {
       imageLoad() {

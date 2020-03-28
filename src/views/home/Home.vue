@@ -37,10 +37,11 @@
   import BackTop from 'components/content/backtop/BackTop'
 
   import {getHomeMultidata,getGoodsList} from 'network/home'
-  import {debounce} from 'common/utils'
+  import {itemListenerMixin} from "common/mixin";
 
   export default {
     name: "Home",
+    mixins: [itemListenerMixin],
     data(){
       return {
         banners: [],
@@ -79,20 +80,17 @@
 
     },
     mounted() {
-      //监听商品列表的图片加载完成，并重新计算scrollerHeight
-      const refresh = debounce(this.$refs.scroll.refresh , 200);
-      this.$bus.$on('itemImageLoad',() => {
-        refresh()
-        }
-      )
-
     },
     activated() {
       this.$refs.scroll.refresh()
       this.$refs.scroll.scrollTo(0,this.aliveHeight,0)
     },
     deactivated() {
+      // 1. 保存Y值
       this.aliveHeight = this.$refs.scroll.scroll.startY
+
+      // 2.取消全局事件的监听
+      this.$bus.$off('itemImageLoad',this.itemImgListener)
     },
     destroyed() {
       console.log('destroyed');
@@ -131,7 +129,7 @@
        this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop
       },
 
-      
+
       /* 网络请求相关方法 */
       getHomeMultidata() {
         getHomeMultidata().then(res => {
